@@ -1,0 +1,53 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}AI শিক্ষক{% endblock %}</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans Bengali"', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="bg-slate-50 font-sans text-slate-800 min-h-screen flex flex-col"
+      hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+
+    <nav class="bg-indigo-600 text-white shadow-md">
+        <div class="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
+            <a href="{% url 'core:home' %}" class="font-bold text-lg">🎓 AI শিক্ষক</a>
+            <div class="text-sm">
+                <a href="#" class="hover:underline">Login</a>
+                <a href="#" class="ml-4 hover:underline">Signup</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="flex-1 max-w-5xl w-full mx-auto px-4 py-8">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="text-center text-slate-400 text-sm py-4">
+        AI Tutor · Django + HTMX + Tailwind
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

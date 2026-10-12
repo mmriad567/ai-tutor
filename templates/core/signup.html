@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}সাইন আপ — AI শিক্ষক{% endblock %}
+
+{% block content %}
+<div class="max-w-md mx-auto mt-10">
+    <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-8">
+        <h1 class="text-2xl font-bold text-slate-800 mb-2">নতুন অ্যাকাউন্ট</h1>
+        <p class="text-slate-500 text-sm mb-6">এক মিনিটে অ্যাকাউন্ট বানাও, শেখা শুরু করো।</p>
+
+        <form method="post" class="space-y-4">
+            {% csrf_token %}
+
+            {% if form.non_field_errors %}
+            <div class="bg-red-50 border border-red-200 text-red-700 rounded-lg p-3 text-sm">
+                {{ form.non_field_errors }}
+            </div>
+            {% endif %}
+
+            {% for field in form %}
+            <div>
+                <label for="{{ field.id_for_label }}" class="block text-sm font-medium text-slate-700 mb-1">
+                    {{ field.label }}
+                </label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="text-red-600 text-xs mt-1">{{ field.errors.0 }}</div>
+                {% endif %}
+                {% if field.help_text %}
+                <div class="text-slate-400 text-xs mt-1">{{ field.help_text|safe }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+
+            <button type="submit"
+                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-semibold py-2.5 rounded-lg transition">
+                সাইন আপ করো
+            </button>
+        </form>
+
+        <p class="text-center text-sm text-slate-500 mt-6">
+            আগে থেকেই অ্যাকাউন্ট আছে?
+            <a href="{% url 'core:login' %}" class="text-indigo-600 hover:underline font-medium">Login করো</a>
+        </p>
+    </div>
+</div>
+{% endblock %}

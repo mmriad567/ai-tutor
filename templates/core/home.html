@@ -3,6 +3,38 @@
 {% block title %}হোম — AI শিক্ষক{% endblock %}
 
 {% block content %}
+
+{% if user.is_authenticated %}
+<div class="flex items-center justify-between mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-800">স্বাগতম, {{ user.username }}! 👋</h1>
+        <p class="text-slate-500 text-sm">তোমার সাম্প্রতিক ক্লাসগুলো:</p>
+    </div>
+    <a href="#"
+       class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+        + নতুন ক্লাস
+    </a>
+</div>
+
+{% if sessions %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+    {% for s in sessions %}
+    <a href="#"
+       class="block bg-white rounded-2xl border border-slate-200 p-4 hover:shadow-md transition">
+        <div class="font-semibold text-slate-800 truncate">{{ s.title }}</div>
+        <div class="text-xs text-slate-400 mt-1">{{ s.updated_at|date:"d M Y, H:i" }}</div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-12 bg-white rounded-2xl border border-slate-200 mb-8">
+    <div class="text-4xl mb-3">📚</div>
+    <p class="text-slate-500">এখনো কোনো ক্লাস নেই। নতুন ক্লাস শুরু করো।</p>
+</div>
+{% endif %}
+
+{% else %}
+
 <div class="text-center py-16">
     <h1 class="text-4xl md:text-5xl font-bold text-slate-800 mb-4">
         স্বাগতম, শিক্ষার্থী! 👋
@@ -10,10 +42,16 @@
     <p class="text-lg text-slate-500 mb-8 max-w-2xl mx-auto">
         তোমার AI শিক্ষক প্রস্তুত। প্রশ্ন করো, ছবি দাও, সহজ বাংলায় শেখো।
     </p>
-    <a href="#"
-       class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-md transition">
-        ▶ ক্লাস শুরু করো
-    </a>
+    <div class="flex justify-center gap-3">
+        <a href="{% url 'core:signup' %}"
+           class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white px-8 py-3 rounded-xl text-lg font-semibold shadow-md transition">
+            ▶ শুরু করো
+        </a>
+        <a href="{% url 'core:login' %}"
+           class="inline-block border border-slate-300 hover:bg-slate-100 text-slate-700 px-8 py-3 rounded-xl text-lg font-semibold transition">
+            Login
+        </a>
+    </div>
 </div>
 
 <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
@@ -33,4 +71,7 @@
         <p class="text-slate-600 text-sm">পড়া শেষে নোট ও কুইজ নিজে তৈরি হবে।</p>
     </div>
 </div>
+
+{% endif %}
+
 {% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}ড্যাশবোর্ড — AI শিক্ষক{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-between mb-6">
+    <div>
+        <h1 class="text-2xl font-bold text-slate-800">তোমার ক্লাসগুলো</h1>
+        <p class="text-slate-500 text-sm">স্বাগতম, {{ user.username }}!</p>
+    </div>
+    <a href="#"
+       class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold">
+        + নতুন ক্লাস
+    </a>
+</div>
+
+{% if sessions %}
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    {% for s in sessions %}
+    <a href="#"
+       class="block bg-white rounded-2xl border border-slate-200 p-4 hover:shadow-md transition">
+        <div class="font-semibold text-slate-800 truncate">{{ s.title }}</div>
+        <div class="text-xs text-slate-400 mt-1">{{ s.updated_at|date:"d M Y, H:i" }}</div>
+    </a>
+    {% endfor %}
+</div>
+{% else %}
+<div class="text-center py-16 bg-white rounded-2xl border border-slate-200">
+    <div class="text-4xl mb-3">📚</div>
+    <p class="text-slate-500">এখনো কোনো ক্লাস নেই। নতুন ক্লাস শুরু করো।</p>
+</div>
+{% endif %}
+{% endblock %}
